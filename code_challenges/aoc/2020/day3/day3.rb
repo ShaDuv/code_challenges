@@ -5,11 +5,14 @@ def matrix
     data
 end 
 
-def traverse (matrix)
+def traverse (matrix, move, column)
     tree_count = 0
     space_count = 0
     position = 0
+    move = move
+
     matrix.each_with_index do |line, i|
+      if i % column == 0
         if line[position] == "#"
             tree_count +=1
             tobaggan = "X" 
@@ -17,17 +20,25 @@ def traverse (matrix)
             space_count +=1
             tobaggan = "O" 
         end
-        if position + 3 <= (line.length) -1
-            position += 3
+        if position + move <= (line.length) -1
+            position += move
         else
-            position =  (line.length - (position + 3)).abs
+            position =  (line.length - (position + move)).abs
         end
         line[position] = tobaggan
-        p "#{line} : #{i}, #{position}"  
+        #p "#{line} : #{i}, #{position}"  
+        end
     end
-    p "Trees: #{tree_count}"
-    p "Spaces: #{space_count}"
+    tree_count
+   
 end
 
 matrix
-traverse(matrix)
+total = traverse(matrix, 1, 1) * traverse(matrix, 3, 1) * traverse(matrix, 5, 1) * traverse(matrix, 7, 1) * traverse(matrix, 1, 2)
+
+p "Tree count for 1 x 1 is #{traverse(matrix, 1, 1)}."
+p "Tree count for 3 x 1 is #{traverse(matrix, 3, 1)}."
+p "Tree count for 5 x 1 is #{traverse(matrix, 5, 1)}."
+p "Tree count for 7 x 1 is #{traverse(matrix, 7, 1)}."
+p "Tree count for 1 x 2 is #{traverse(matrix, 1, 2)}."
+p "Total multiplied together is #{total}"
