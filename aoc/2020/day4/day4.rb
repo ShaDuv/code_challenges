@@ -1,3 +1,8 @@
+def run
+    output = passport_data(data)
+    validate(output)
+end
+
 def data
     raw_data = []
     f = File.open("./input.txt")
@@ -18,16 +23,19 @@ def passport_data(data)
         end
         passports.push(hash)
     end 
-    p passports
+    passports
 end   
 
 def validate(passport_data)
-    required_fields = [byr, iyr, eyr, hgt, hcl, ecl, pid, cid]
-    passports.each do |passport|
-        p passport.each_key
+    required_fields = [:byr, :iyr, :eyr, :hgt, :hcl, :ecl, :pid, ]
+    valid = 0
+    passport_data.each do |passport|
+       p check = required_fields - passport.keys
+       if check.empty?
+        valid +=1
+       end
     end
+    p valid
 end
 
-data
-passport_data(data)
-validate(passport_data)
+run
