@@ -14,7 +14,8 @@ def locate(tickets)
     tickets.each_with_index do |seat, i|
         diff = (seat.to_i - tickets[i+1].to_i).abs
         if diff > 1
-            p seat.next
+            p "Highest seat number is #{tickets[-1]}"
+            p "My seat is #{seat.next}"
             break
         end
 
